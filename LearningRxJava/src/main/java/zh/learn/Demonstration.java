@@ -2,6 +2,7 @@ package zh.learn;
 
 import io.reactivex.disposables.Disposable;
 
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
 
 public class Demonstration {
@@ -37,5 +38,9 @@ public class Demonstration {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public static int randomInt() {
+        return ThreadLocalRandom.current().nextInt(100000);
     }
 }
