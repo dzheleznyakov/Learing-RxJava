@@ -2,8 +2,9 @@ package zh.learn;
 
 import io.reactivex.disposables.Disposable;
 
-import javax.annotation.Nonnull;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.BooleanSupplier;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class Demonstration {
@@ -19,6 +20,25 @@ public class Demonstration {
         if (disposable != null && !disposable.isDisposed()) {
             disposable.dispose();
         }
+        printTail();
+    }
+
+    public static void demonstrateWithTimeGauge(String header, Runnable code) {
+        printHeader(header);
+        long beginning = System.currentTimeMillis();
+        code.run();
+        System.out.println("Time taken: " + (System.currentTimeMillis() - beginning) + " ms");
+        printTail();
+    }
+
+    public static void demonstrateWithTimeGauge(String header, Supplier<Disposable> observableRunner) {
+        printHeader(header);
+        long beginning = System.currentTimeMillis();
+        Disposable disposable = observableRunner.get();
+        if (disposable != null && !disposable.isDisposed()) {
+            disposable.dispose();
+        }
+        System.out.println("Time taken: " + (System.currentTimeMillis() - beginning) + " ms");
         printTail();
     }
 
@@ -41,7 +61,23 @@ public class Demonstration {
         }
     }
 
+    public static void sleepWhile(BooleanSupplier test, int bound) {
+        long start = System.currentTimeMillis();
+        while (!test.getAsBoolean() && (System.currentTimeMillis() - start) < bound) {
+            sleep(5);
+        }
+    }
+
     public static int randomInt() {
-        return ThreadLocalRandom.current().nextInt(100000);
+        return randomInt(100000);
+    }
+
+    public static int randomInt(int bound) {
+        return ThreadLocalRandom.current().nextInt(bound);
+    }
+
+    public static <T> T intenseCalculation(T value) {
+        sleep(randomInt(3000));
+        return value;
     }
 }
