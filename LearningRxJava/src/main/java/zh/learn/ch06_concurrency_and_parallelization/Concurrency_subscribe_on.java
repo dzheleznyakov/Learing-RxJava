@@ -6,15 +6,15 @@ import io.reactivex.schedulers.Schedulers;
 import zh.learn.Demonstration;
 import zh.learn.DisposableArray;
 
-import java.net.URL;
-import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 public class Concurrency_subscribe_on extends Demonstration {
     public static void main(String[] args) {
         demonstrate("subscribeOn()", Concurrency_subscribe_on::demonstrateSubscribeOn);
         demonstrate("Subscribe on the same computation thread", Concurrency_subscribe_on::subscribeOnTheSameThread);
-        demonstrate("Subsribe on a IO thread", Concurrency_subscribe_on::subscribeOnIOScheduler);
+        demonstrate("Subscribe on a IO thread", Concurrency_subscribe_on::subscribeOnIOScheduler);
+        demonstrate("Observable interval accepts schedulers on creation", Concurrency_subscribe_on::observableIntervalAcceptsSchedulersOnCreation);
+        demonstrate("First subscribeOn wins", Concurrency_subscribe_on::firstSubscribeOnWins);
     }
 
     private static Disposable demonstrateSubscribeOn() {
@@ -57,11 +57,24 @@ public class Concurrency_subscribe_on extends Demonstration {
         return d;
     }
 
-    private static String getResponse(String path) {
-        try {
-            return new Scanner(new URL(path).openStream(), "UTF-8").useDelimiter("\\A").next();
-        } catch (Exception e) {
-            return e.getMessage();
-        }
+    private static Disposable observableIntervalAcceptsSchedulersOnCreation() {
+        Disposable d = Observable.interval(1, TimeUnit.SECONDS, Schedulers.newThread())
+                .subscribe(i -> System.out.println("Received " + i + " on thread " + Thread.currentThread().getName()));
+
+        sleep(5000);
+
+        return d;
+    }
+
+    private static Disposable firstSubscribeOnWins() {
+        Disposable d = Observable.just("Alpha", "Beta", "Gamma", "Delta", "Epsilon")
+                .subscribeOn(Schedulers.computation())
+                .filter(s -> s.length() == 5)
+                .subscribeOn(Schedulers.io())
+                .subscribe(i -> System.out.println("Received " + i + " on thread " + Thread.currentThread().getName()));
+
+        sleep(5000);
+
+        return d;
     }
 }

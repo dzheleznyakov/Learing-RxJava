@@ -2,6 +2,11 @@ package zh.learn;
 
 import io.reactivex.disposables.Disposable;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.net.URL;
+import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.BooleanSupplier;
 import java.util.function.Predicate;
@@ -79,5 +84,29 @@ public class Demonstration {
     public static <T> T intenseCalculation(T value) {
         sleep(randomInt(3000));
         return value;
+    }
+
+    public static String getResponse(String path) {
+        try {
+            return new Scanner(new URL(path).openStream(), "UTF-8").useDelimiter("\\A").next();
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+    }
+
+    public static void write(String text, String path) {
+        BufferedWriter writer = null;
+        try {
+            File file = new File(path);
+            writer = new BufferedWriter((new FileWriter(file)));
+            writer.append(text);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                writer.close();
+            } catch (Exception e) {
+            }
+        }
     }
 }
