@@ -66,9 +66,9 @@ public class Demonstration {
         }
     }
 
-    public static void sleepWhile(BooleanSupplier test, int bound) {
+    public static void sleepWhile(BooleanSupplier wakeUp, int bound) {
         long start = System.currentTimeMillis();
-        while (!test.getAsBoolean() && (System.currentTimeMillis() - start) < bound) {
+        while (!wakeUp.getAsBoolean() && (System.currentTimeMillis() - start) < bound) {
             sleep(5);
         }
     }
