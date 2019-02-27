@@ -1,22 +1,24 @@
 package zh.learn.ch07_dealing_with_fast_emmitions;
 
 import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import zh.learn.Demonstration;
 
 import java.util.concurrent.TimeUnit;
 
-public class Buffering_boundary_based extends Demonstration {
+public class Windowing_boundary_based extends Demonstration {
     public static void main(String[] args) {
-        demonstrate("Understanding boundary-based buffer", Buffering_boundary_based::understandingBoundaryBuffering);
+        demonstrate("Understanding boundary-based windowing", Windowing_boundary_based::understandingBoundaryBasedWindowing);
     }
 
-    private static Disposable understandingBoundaryBuffering() {
+    private static Disposable understandingBoundaryBasedWindowing() {
         Observable<Long> cutOffs = Observable.interval(1, TimeUnit.SECONDS);
         Disposable d = Observable.interval(300, TimeUnit.MILLISECONDS)
                 .map(i -> (i + 1) * 300)
-                .buffer(cutOffs)
+                .window(cutOffs)
+                .flatMapSingle(obs -> obs.reduce(
+                        "",
+                        (total, next) -> total + (total.equals("") ? "" : "|") + next))
                 .subscribe(System.out::println);
 
         sleep(5000);
