@@ -47,6 +47,18 @@ public class Demonstration {
         printTail();
     }
 
+    public static void demonstrateLast(String header, Runnable... runners) {
+        if  (runners == null || runners.length == 0)
+            return;
+        demonstrate(header, runners[runners.length - 1]);
+    }
+
+    public static void demonstrateLast(String header, Supplier<Disposable>... observableRunners) {
+        if (observableRunners == null || observableRunners.length == 0)
+            return;
+        demonstrate(header, observableRunners[observableRunners.length - 1]);
+    }
+
     private static void printTail() {
         System.out.println();
         System.out.println();
@@ -59,6 +71,14 @@ public class Demonstration {
     }
 
     public static void sleep(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void sleep(long millis) {
         try {
             Thread.sleep(millis);
         } catch (InterruptedException e) {
@@ -82,7 +102,11 @@ public class Demonstration {
     }
 
     public static <T> T intenseCalculation(T value) {
-        sleep(randomInt(3000));
+        return intenseCalculation(value, 3000);
+    }
+
+    public static <T> T intenseCalculation(T value, int bound) {
+        sleep(randomInt(bound));
         return value;
     }
 
