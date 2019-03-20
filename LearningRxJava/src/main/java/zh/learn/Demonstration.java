@@ -74,7 +74,7 @@ public class Demonstration {
         try {
             Thread.sleep(millis);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println("INTERRUPTED: " + e.getMessage());
         }
     }
 
