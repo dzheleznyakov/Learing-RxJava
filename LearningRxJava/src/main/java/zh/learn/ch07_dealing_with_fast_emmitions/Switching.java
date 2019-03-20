@@ -20,7 +20,7 @@ public class Switching extends Demonstration {
 
         Disposable d = processString.subscribe(System.out::println);
 
-        sleepWhile(d::isDisposed, 20000);
+        sleepUntil(d::isDisposed, 20000);
 
         return d;
     }
@@ -36,7 +36,7 @@ public class Switching extends Demonstration {
                         .doOnDispose(() -> System.out.println("Disposing! Starting next"))
                 ).subscribe(System.out::println);
 
-        sleepWhile(d::isDisposed, 20000);
+        sleepUntil(d::isDisposed, 20000);
 
         return d;
     }

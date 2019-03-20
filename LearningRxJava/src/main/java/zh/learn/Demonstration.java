@@ -86,7 +86,7 @@ public class Demonstration {
         }
     }
 
-    public static void sleepWhile(BooleanSupplier wakeUp, int bound) {
+    public static void sleepUntil(BooleanSupplier wakeUp, int bound) {
         long start = System.currentTimeMillis();
         while (!wakeUp.getAsBoolean() && (System.currentTimeMillis() - start) < bound) {
             sleep(5);

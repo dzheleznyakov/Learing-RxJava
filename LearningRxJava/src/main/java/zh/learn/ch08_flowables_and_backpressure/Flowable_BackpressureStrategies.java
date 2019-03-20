@@ -35,7 +35,7 @@ public class Flowable_BackpressureStrategies extends Demonstration {
                 .observeOn(Schedulers.io())
                 .subscribe(System.out::println);
 
-        sleepWhile(d::isDisposed, 10000);
+        sleepUntil(d::isDisposed, 10000);
     }
 
     private static void turnFlowbaleIntoObservable() {
@@ -44,6 +44,6 @@ public class Flowable_BackpressureStrategies extends Demonstration {
         Disposable d = Observable.just("Alpha", "Beta", "Gamma", "Delta", "Epsilon")
                 .flatMap(s -> integers.map(i -> i + "-" + s).toObservable())
                 .subscribe(System.out::println);
-        sleepWhile(d::isDisposed, 5000);
+        sleepUntil(d::isDisposed, 5000);
     }
 }

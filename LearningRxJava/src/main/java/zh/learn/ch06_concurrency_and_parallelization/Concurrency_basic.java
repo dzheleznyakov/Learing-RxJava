@@ -36,7 +36,7 @@ public class Concurrency_basic {
                 .map(Demonstration::intenseCalculation)
                 .subscribe(System.out::println);
 
-        sleepWhile(() -> DisposableArray.of(d1, d2).isDisposed(), 20000);
+        sleepUntil(() -> DisposableArray.of(d1, d2).isDisposed(), 20000);
     }
 
     private static void zipConcurrentStreams() {
@@ -51,6 +51,6 @@ public class Concurrency_basic {
         Disposable d = Observable.zip(source1, source2, (s, i) -> s + "-" + i)
                 .subscribe(System.out::println);
 
-        sleepWhile(d::isDisposed, 20000);
+        sleepUntil(d::isDisposed, 20000);
     }
 }

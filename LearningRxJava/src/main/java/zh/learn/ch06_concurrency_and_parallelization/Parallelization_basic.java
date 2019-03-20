@@ -30,7 +30,7 @@ public class Parallelization_basic extends Demonstration {
                 .subscribe(i -> System.out.println("Received " + i + " "
                         + LocalTime.now() + " on thread " + Thread.currentThread().getName()));
 
-        sleepWhile(d::isDisposed, 20000);
+        sleepUntil(d::isDisposed, 20000);
 
         return d;
     }
@@ -48,7 +48,7 @@ public class Parallelization_basic extends Demonstration {
                         + LocalTime.now() + " on thread "
                         + Thread.currentThread().getName()));
 
-        sleepWhile(d::isDisposed, 20000);
+        sleepUntil(d::isDisposed, 20000);
 
         return d;
     }
