@@ -12,7 +12,7 @@ public class Observable_concat {
         demonstrate("Simple concatenation", Observable_concat::simpleConcatenation);
         demonstrate("Concatenation with operator", Observable_concat::concatenationAsOperator);
         demonstrate("Concatenation with infinite sources", Observable_concat::concatenationWithInfiniteSources);
-        demonstrate("Map and concatanate", Observable_concat::mapAndConcatenate);
+        demonstrate("Map and concatenate", Observable_concat::mapAndConcatenate);
     }
 
     private static void simpleConcatenation() {

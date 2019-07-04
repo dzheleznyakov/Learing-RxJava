@@ -1,4 +1,4 @@
-package zh.learn.ch04_combining_observables;
+package ks;
 
 import io.reactivex.Observable;
 
@@ -9,13 +9,13 @@ import java.util.concurrent.TimeUnit;
 import static zh.learn.Demonstration.demonstrate;
 import static zh.learn.Demonstration.sleep;
 
-public class Observable_merge {
+public class _04_03_Observable_merge {
     public static void main(String[] args) {
-        demonstrate("Merge up to four sources", Observable_merge::mergeUpTo4Sources);
-        demonstrate("Merge as operator", Observable_merge::mergeWith);
-        demonstrate("Merge more then four sources", Observable_merge::mergeArray);
-        demonstrate("Merge iterable", Observable_merge::mergeIterable);
-        demonstrate("Merge infinite sources", Observable_merge::mergeInfinite);
+//        demonstrate("Merge up to four sources", _04_03_Observable_merge::mergeUpTo4Sources);
+//        demonstrate("Merge as operator", _04_03_Observable_merge::mergeWith);
+//        demonstrate("Merge more then four sources", _04_03_Observable_merge::mergeArray);
+//        demonstrate("Merge iterable", _04_03_Observable_merge::mergeIterable);
+        demonstrate("Merge infinite sources", _04_03_Observable_merge::mergeInfinite);
     }
 
     private static void mergeUpTo4Sources() {
